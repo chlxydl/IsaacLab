@@ -580,7 +580,10 @@ class InteractiveScene:
         # store paths that are in global collision filter
         self._global_prim_paths = list()
         # parse the entire scene config and resolve regex
-        for asset_name, asset_cfg in self.cfg.__dict__.items():
+        keys = sorted(self.cfg.__dict__.keys(), key=lambda x: 1 if 'camera' in x else 0)
+        # for asset_name, asset_cfg in self.cfg.__dict__.items():
+        for asset_name in keys:
+            asset_cfg = self.cfg.__dict__[asset_name]
             # skip keywords
             # note: easier than writing a list of keywords: [num_envs, env_spacing, lazy_sensor_update]
             if asset_name in InteractiveSceneCfg.__dataclass_fields__ or asset_cfg is None:
